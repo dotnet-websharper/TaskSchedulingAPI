@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.TaskScheduling", "WebSharper.TaskScheduling\WebSharper.TaskScheduling.fsproj", "{C7C46DDC-4643-4144-A72F-BA3D0E91D997}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.TaskScheduling.Sample", "WebSharper.TaskScheduling.Sample\WebSharper.TaskScheduling.Sample.fsproj", "{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7C46DDC-4643-4144-A72F-BA3D0E91D997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7C46DDC-4643-4144-A72F-BA3D0E91D997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7C46DDC-4643-4144-A72F-BA3D0E91D997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7C46DDC-4643-4144-A72F-BA3D0E91D997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BDD6665-24AC-42C4-9B44-F4EF7577238B}
+	EndGlobalSection
+EndGlobal
