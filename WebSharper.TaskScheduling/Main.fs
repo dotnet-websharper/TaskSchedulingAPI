@@ -102,28 +102,9 @@ module Definition =
             "isInputPending" => T<unit> * !?SchedulingInputPendingOptions?options ^-> T<bool>
         ]
 
-    let Window =
-        Class "Window"
-        |+> Instance [
-            "scheduler" =? Scheduler
-        ]
-
-    let WorkerGlobalScope =
-        Class "WorkerGlobalScope"
-        |+> Instance [
-            "scheduler" =? Scheduler
-        ]
-
-    let Navigator =
-        Class "Navigator"
-        |+> Instance [
-            "scheduling" =? Scheduling
-        ]
-
     let Assembly =
         Assembly [
-            Namespace "WebSharper.TaskScheduling" [
-                Navigator
+            Namespace "WebSharper.TaskScheduling" [                
                 Scheduling
                 SchedulingInputPendingOptions
                 TaskControllerInit
@@ -135,8 +116,6 @@ module Definition =
                 TaskSignal
                 TaskPriorityChangeEvent
                 Scheduler
-                Window
-                WorkerGlobalScope
             ]
         ]
 

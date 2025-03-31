@@ -7,6 +7,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.TaskScheduling",
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.TaskScheduling.Sample", "WebSharper.TaskScheduling.Sample\WebSharper.TaskScheduling.Sample.fsproj", "{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.TaskScheduling.Extensions", "WebSharper.TaskScheduling.Extensions\WebSharper.TaskScheduling.Extensions.fsproj", "{60135D39-4C2E-4EA5-A1B3-9C33B2322B79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3512623A-10FA-47CE-8EB7-D42A8D84F1F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60135D39-4C2E-4EA5-A1B3-9C33B2322B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60135D39-4C2E-4EA5-A1B3-9C33B2322B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60135D39-4C2E-4EA5-A1B3-9C33B2322B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60135D39-4C2E-4EA5-A1B3-9C33B2322B79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

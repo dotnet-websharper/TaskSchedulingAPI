@@ -75,25 +75,24 @@ module Client =
 
     let runScheduledTasks () =
         promise {
-            let window = As<Window> JS.Window
-            let scheduler = window.Scheduler
+            let scheduler = JS.Window.Scheduler
 
             if isNull scheduler then
                 Console.Error("\u274C Prioritized Task Scheduling API is not supported in this browser.")
             else
                 // ✅ High priority task (executed first)
                 do! scheduler.PostTask((fun _ ->
-                    Console.Log("\ud83d\udd25 High Priority Task: user-blocking")
+                    Console.Log("🔥 High Priority Task: user-blocking")
                 ), TaskOptions(Priority = TaskPriority.User_blocking))
 
                 // ✅ Medium priority task (executed second)
                 do! scheduler.PostTask((fun _ ->
-                    Console.Log("\u26a1 Medium Priority Task: user-visible")
+                    Console.Log("⚡ Medium Priority Task: user-visible")
                 ), TaskOptions(Priority = TaskPriority.User_visible))
 
                 // ✅ Low priority task (executed last)
                 do! scheduler.PostTask((fun _ ->
-                    Console.Log("\ud83d\udca4 Low Priority Task: background")
+                    Console.Log("💤 Low Priority Task: background")
                 ), TaskOptions(Priority = TaskPriority.Background))
 
                 Console.Log("\u2705 Tasks have been scheduled!")

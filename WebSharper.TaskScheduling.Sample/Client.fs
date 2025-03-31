@@ -15,8 +15,7 @@ module Client =
 
     let runScheduledTasks () =
         promise {
-            let window = As<Window> JS.Window
-            let scheduler = window.Scheduler
+            let scheduler = JS.Window.Scheduler
 
             if isNull scheduler then
                 Console.Error("❌ Prioritized Task Scheduling API is not supported in this browser.")
