@@ -15,8 +15,10 @@ tags
     Web JavaScript F# C#
 files
     ../WebSharper.TaskScheduling.Extensions/bin/Release/netstandard2.0/WebSharper.TaskScheduling.Extensions.dll ==> lib/netstandard2.0
+    ../WebSharper.TaskScheduling.Extensions/bin/Release/netstandard2.0/WebSharper.TaskScheduling.Extensions.websharper ==> lib/netstandard2.0
     ../WebSharper.TaskScheduling.Extensions/bin/Release/netstandard2.0/WebSharper.TaskScheduling.Extensions.xml ==> lib/netstandard2.0
     ../WebSharper.TaskScheduling/bin/Release/netstandard2.0/WebSharper.TaskScheduling.dll ==> lib/netstandard2.0
+    ../WebSharper.TaskScheduling/bin/Release/netstandard2.0/WebSharper.TaskScheduling.websharper ==> lib/netstandard2.0
     ../WebSharper.TaskScheduling/bin/Release/netstandard2.0/WebSharper.TaskScheduling.xml ==> lib/netstandard2.0
 dependencies
         WebSharper ~> LOCKEDVERSION:[3]
