@@ -1,22 +1,44 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>WebSharper.TaskScheduling.Sample</title>
+    <title>WebSharper Prioritized Task Scheduling Demo</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%234f46e5'/%3E%3Ccircle cx='8' cy='8' r='5' fill='none' stroke='white' stroke-width='1.6'/%3E%3Cpath d='M8 4.8V8l2.2 1.4' stroke='white' stroke-width='1.6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E" />
     <link rel="stylesheet" type="text/css" href="Content/WebSharper.TaskScheduling.Sample.css" />
-    <style>
-        /* Don't show the not-yet-loaded templates */
-        [ws-template], [ws-children-template] { display: none; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="site.css" />
     <script type="module" src="Content/WebSharper.TaskScheduling.Sample.head.js"></script>
 </head>
 <body>
-    <h1>Prioritized Task Scheduling API Example</h1>
-    <div id="main" ws-children-template="Main">
-        <p>Check the console to see task execution order.</p>
-        <button id="runTasks" ws-onclick="RunTasks">Run Scheduled Tasks</button>
-    </div>
+    <main class="page">
+        <header class="hero">
+            <h1>Prioritized Task Scheduling API Demo</h1>
+            <p class="lede">
+                Schedule work with <code>scheduler.postTask()</code> at three priorities
+                (<code>user-blocking</code>, <code>user-visible</code>, and <code>background</code>).
+                See the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Scheduler" target="_blank" rel="noreferrer">Prioritized Task Scheduling API</a> on MDN.
+            </p>
+        </header>
+
+        <section class="card">
+            <h2>Run tasks</h2>
+            <p class="hint">The tasks run in priority order and also log to the browser console. The results below update as they run.</p>
+            <div class="actions">
+                <button class="btn btn-primary" ws-onclick="RunTasks">Run scheduled tasks</button>
+            </div>
+            <p class="status" role="status">${status}</p>
+            <ol class="log" ws-hole="log"></ol>
+        </section>
+
+        <section class="card">
+            <h2>What the API provides</h2>
+            <ul class="readout">
+                <li><code>scheduler.postTask()</code> — queue a task and await its result.</li>
+                <li><code>scheduler.yield()</code> — yield control back to the browser.</li>
+                <li><code>TaskController</code> / <code>TaskSignal</code> — change the priority of a queued task.</li>
+            </ul>
+        </section>
+    </main>
     <script type="module" src="Content/WebSharper.TaskScheduling.Sample.min.js"></script>
 </body>
 </html>
