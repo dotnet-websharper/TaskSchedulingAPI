@@ -1,0 +1,22 @@
+type file
+id WebSharper.TaskScheduling
+authors
+    IntelliFactory
+owners
+    IntelliFactory
+repositoryType git
+repositoryUrl https://github.com/dotnet-websharper/TaskSchedulingAPI/
+licenseUrl https://github.com/dotnet-websharper/TaskSchedulingAPI/blob/main/LICENSE.md
+iconUrl https://github.com/dotnet-websharper/core/raw/websharper50/tools/WebSharper.png
+projectUrl https://github.com/dotnet-websharper/TaskSchedulingAPI
+description
+    WebSharper bindings for TaskScheduling
+tags
+    Web JavaScript F# C#
+files
+    ../WebSharper.TaskScheduling.Extensions/bin/Release/netstandard2.0/WebSharper.TaskScheduling.Extensions.dll ==> lib/netstandard2.0
+    ../WebSharper.TaskScheduling.Extensions/bin/Release/netstandard2.0/WebSharper.TaskScheduling.Extensions.xml ==> lib/netstandard2.0
+    ../WebSharper.TaskScheduling/bin/Release/netstandard2.0/WebSharper.TaskScheduling.dll ==> lib/netstandard2.0
+    ../WebSharper.TaskScheduling/bin/Release/netstandard2.0/WebSharper.TaskScheduling.xml ==> lib/netstandard2.0
+dependencies
+        WebSharper ~> LOCKEDVERSION:[3]
