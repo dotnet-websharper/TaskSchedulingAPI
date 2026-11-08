@@ -1,121 +1,151 @@
-# WebSharper Prioritized Task Scheduling API Binding
+# WebSharper.TaskScheduling
 
-This repository provides an F# [WebSharper](https://websharper.com/) binding for the [Prioritized Task Scheduling API](https://developer.mozilla.org/en-US/docs/Web/API/Scheduler), enabling efficient scheduling of tasks based on priority levels in WebSharper applications.
+[![NuGet](https://img.shields.io/badge/nuget-not%20published-lightgrey)](https://github.com/dotnet-websharper/TaskSchedulingAPI)
 
-## Repository Structure
+WebSharper bindings for the [Prioritized Task Scheduling API](https://developer.mozilla.org/en-US/docs/Web/API/Scheduler) —
+scheduling tasks at `user-blocking`, `user-visible`, and `background` priorities from F# and C# web apps.
 
-The repository consists of two main projects:
+The API is exposed through `window.scheduler` (and `navigator.scheduling` for input-pending checks). Check the
+browser compatibility table on MDN before relying on it in production.
 
-1. **Binding Project**:
+This repository contains:
 
-   - Contains the F# WebSharper binding for the Prioritized Task Scheduling API.
+| Project | Purpose |
+| --- | --- |
+| `WebSharper.TaskScheduling` | The binding: WIG definitions for `Scheduler`, `TaskController`, `TaskSignal`, `TaskPriority`, `TaskPriorityChangeEvent`, `Scheduling`, and their option dictionaries. |
+| `WebSharper.TaskScheduling.Extensions` | `[<Inline>]` client extensions: `window.scheduler`, `workerGlobalScope.scheduler`, and `navigator.scheduling`. |
+| `WebSharper.TaskScheduling.Sample` | An ASP.NET Core SPA that schedules tasks at three priorities and shows the results in the page. |
 
-2. **Sample Project**:
-   - Demonstrates how to use the Prioritized Task Scheduling API with WebSharper syntax.
-   - Includes a GitHub Pages demo: [View Demo](https://dotnet-websharper.github.io/TaskSchedulingAPI/)
+## Live demos
+
+**Try it live:** [Open the sample in your browser](https://dotnet-websharper.github.io/TaskSchedulingAPI/)
+
+![Prioritized Task Scheduling API sample](docs/sample.png)
+
+The sample doubles as the binding's test case: it runs tasks at three priorities and logs their order to the page and the console.
+
+- **Sample (this repository):** <https://dotnet-websharper.github.io/TaskSchedulingAPI/>
+- **Source repository:** <https://github.com/dotnet-websharper/TaskSchedulingAPI>
+- **WebSharper bindings:** <https://websharper.com/bindings>
+
+## Features
+
+- `Scheduler` (`postTask`, `yield`) with `TaskOptions` (`priority`, `signal`, `delay`).
+- `TaskPriority` (`user-blocking`, `user-visible`, `background`).
+- `TaskController` (`setPriority`) and `TaskSignal` (`priority`, `onPriorityChange`).
+- `TaskPriorityChangeEvent` and its `TaskPriorityChangeEventInit`.
+- `Scheduling` (`isInputPending`) and `SchedulingInputPendingOptions`.
+- `window.scheduler`, `workerGlobalScope.scheduler`, and `navigator.scheduling` in the Extensions assembly.
 
 ## Installation
 
-To use this package in your WebSharper project, add the NuGet package:
+The binding is not currently published to NuGet. Reference the projects from source:
 
 ```bash
-   dotnet add package WebSharper.TaskScheduling
+git clone https://github.com/dotnet-websharper/TaskSchedulingAPI.git
 ```
 
-## Building
+```xml
+<ItemGroup>
+  <ProjectReference Include="path/to/WebSharper.TaskScheduling/WebSharper.TaskScheduling.fsproj" />
+  <ProjectReference Include="path/to/WebSharper.TaskScheduling.Extensions/WebSharper.TaskScheduling.Extensions.fsproj" />
+</ItemGroup>
+```
 
-### Prerequisites
-
-- [.NET SDK](https://dotnet.microsoft.com/download) installed on your machine.
-
-### Steps
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/dotnet-websharper/TaskSchedulingAPI.git
-   cd TaskSchedulingAPI
-   ```
-
-2. Build the Binding Project:
-
-   ```bash
-   dotnet build WebSharper.TaskScheduling/WebSharper.TaskScheduling.fsproj
-   ```
-
-3. Build and Run the Sample Project:
-
-   ```bash
-   cd WebSharper.TaskScheduling.Sample
-   dotnet build
-   dotnet run
-   ```
-
-4. Open the hosted demo to see the Sample project in action.
-
-## Example Usage
-
-Below is an example of how to use the Prioritized Task Scheduling API in a WebSharper project:
+## Usage
 
 ```fsharp
-namespace WebSharper.TaskScheduling.Sample
+namespace WebSharper.TaskScheduling.Demo
 
 open WebSharper
 open WebSharper.JavaScript
-open WebSharper.UI
-open WebSharper.UI.Client
-open WebSharper.UI.Templating
 open WebSharper.TaskScheduling
 
 [<JavaScript>]
-module Client =
-    // The templates are loaded from the DOM, so you just can edit index.html
-    // and refresh your browser, no need to recompile unless you add or remove holes.
-    type IndexTemplate = Template<"wwwroot/index.html", ClientLoad.FromDocument>
-
-    let runScheduledTasks () =
+module Demo =
+    let run () =
         promise {
             let scheduler = JS.Window.Scheduler
 
-            if isNull scheduler then
-                Console.Error("\u274C Prioritized Task Scheduling API is not supported in this browser.")
-            else
-                // ✅ High priority task (executed first)
-                do! scheduler.PostTask((fun _ ->
-                    Console.Log("🔥 High Priority Task: user-blocking")
-                ), TaskOptions(Priority = TaskPriority.User_blocking))
+            do! scheduler.PostTask((fun _ ->
+                Console.Log("High priority")
+            ), TaskOptions(Priority = TaskPriority.User_blocking))
 
-                // ✅ Medium priority task (executed second)
-                do! scheduler.PostTask((fun _ ->
-                    Console.Log("⚡ Medium Priority Task: user-visible")
-                ), TaskOptions(Priority = TaskPriority.User_visible))
-
-                // ✅ Low priority task (executed last)
-                do! scheduler.PostTask((fun _ ->
-                    Console.Log("💤 Low Priority Task: background")
-                ), TaskOptions(Priority = TaskPriority.Background))
-
-                Console.Log("\u2705 Tasks have been scheduled!")
+            do! scheduler.PostTask((fun _ ->
+                Console.Log("Low priority")
+            ), TaskOptions(Priority = TaskPriority.Background))
         }
-
-    [<SPAEntryPoint>]
-    let Main () =
-
-        IndexTemplate.Main()
-            .RunTasks(fun _ ->
-                async {
-                    do! runScheduledTasks().AsAsync()
-                }
-                |> Async.StartImmediate
-            )
-            .Doc()
-        |> Doc.RunById "main"
 ```
 
-This example demonstrates how to schedule and execute tasks with different priority levels.
+The `scheduler` accessor is declared in the Extensions assembly and hangs off `JS.Window` and
+`WorkerGlobalScope`. `postTask()` returns a `Promise<unit>`; the callback runs when the browser
+schedules the task. Use `TaskController` and `TaskSignal` to change the priority of a task after it
+has been queued.
 
-## Important Considerations
+## Running the sample
 
-- **Browser Compatibility**: The Prioritized Task Scheduling API is currently supported in limited browsers. Check the [MDN Prioritized Task Scheduling API](https://developer.mozilla.org/en-US/docs/Web/API/Scheduler) for the latest support information.
-- **Performance Optimization**: Use this API to optimize performance and responsiveness in web applications by prioritizing user-visible tasks.
-- **Graceful Fallback**: Ensure fallback mechanisms are in place if the API is not supported in a user's browser.
+Build the sample in Release and serve its static output:
+
+```bash
+dotnet build WebSharper.TaskScheduling.Sample/WebSharper.TaskScheduling.Sample.fsproj -c Release
+python3 -m http.server -d WebSharper.TaskScheduling.Sample/wwwroot 8099
+```
+
+Open <http://localhost:8099/>. The sample runs the three priority levels automatically and also on the
+button, and shows the execution order in the page and the browser console.
+
+Alternatively, run the ASP.NET Core host:
+
+```bash
+dotnet run --project WebSharper.TaskScheduling.Sample
+```
+
+## Building from source
+
+### Prerequisites
+
+- [.NET SDK 10](https://dotnet.microsoft.com/download) or later.
+
+### Build
+
+```bash
+dotnet build WebSharper.TaskScheduling.sln -c Release
+```
+
+The binding projects target `netstandard2.0`; the sample targets `net10.0`.
+
+## Deployment
+
+Pushing to `main` triggers `.github/workflows/ghpages.yml`, which builds the sample in Release and publishes
+`WebSharper.TaskScheduling.Sample/wwwroot` to the `gh-pages` branch.
+
+## Repository layout
+
+```
+WebSharper.TaskScheduling/              # binding (WIG definitions)
+  Main.fs
+WebSharper.TaskScheduling.Extensions/   # [<Inline>] client extensions
+  Library.fs
+WebSharper.TaskScheduling.Sample/       # ASP.NET Core SPA demo
+  Client.fs
+  Startup.fs
+  wwwroot/
+    index.html
+    site.css
+.github/workflows/ghpages.yml      # build + deploy the sample to GitHub Pages
+```
+
+## Notes on the API
+
+- **Browser support:** the Prioritized Task Scheduling API is only available in some browsers. The sample checks
+  `window.scheduler` and falls back gracefully when it is missing.
+- **Priorities:** `user-blocking` runs first, `user-visible` next, and `background` last. The browser decides when
+  to run each task.
+- **Signals:** `TaskController` and `TaskSignal` let you change the priority of a queued task. Pass the signal in
+  `TaskOptions.Signal`.
+- **Input pending:** `navigator.scheduling.isInputPending()` reports whether a frame is waiting on input. It is
+  experimental and not available in every browser.
+
+## License
+
+Apache 2.0 — see [LICENSE.md](LICENSE.md).
